@@ -16,5 +16,10 @@ namespace WindowsDBCommunication
         {
             InitializeComponent();
         }
+
+        private void Validations_Load(object sender, EventArgs e)
+        {
+            //Logic
+        }
     }
 }

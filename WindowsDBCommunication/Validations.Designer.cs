@@ -211,7 +211,7 @@
             this.listBox1.Size = new System.Drawing.Size(310, 384);
             this.listBox1.TabIndex = 16;
             // 
-            // txtConfirmpassword
+            // Validations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -233,8 +233,9 @@
             this.Controls.Add(this.txtUserId);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtUserName);
-            this.Name = "txtConfirmpassword";
+            this.Name = "Validations";
             this.Text = "Validations";
+            this.Load += new System.EventHandler(this.Validations_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
