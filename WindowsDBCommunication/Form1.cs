@@ -8,13 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Configuration; // step-1
+using System.Configuration;
+using System.Runtime; // step-1
 
 namespace WindowsDBCommunication
 {
     public partial class Form1 : Form
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBConn"].ConnectionString);
+        int currentrow = 0;
+        DataTable dt = new DataTable();
         public Form1()
         {
             InitializeComponent();
@@ -83,8 +86,8 @@ namespace WindowsDBCommunication
 
         private void btnGet_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("select * from employee where empid =@p1", con);
-            cmd.Parameters.AddWithValue("@p1", txtEmpid.Text);
+            SqlCommand cmd = new SqlCommand("select * from employee where empid =@empid", con);
+            cmd.Parameters.AddWithValue("@empid", txtEmpid.Text);
             con.Open();  //step-4
             SqlDataReader dr = cmd.ExecuteReader();  // step-5
             if (dr.Read() == true)
@@ -100,6 +103,62 @@ namespace WindowsDBCommunication
                 MessageBox.Show("Invalid EmployeeId");
             }
             con.Close();
+        }
+
+        private void Displaydata(int currentrow)
+        {
+            txtEmpid.Text = dt.Rows[currentrow]["Empid"].ToString();
+            txtEmpName.Text = dt.Rows[currentrow]["EmpName"].ToString();
+            txtEmpSal.Text = dt.Rows[currentrow]["EmpSal"].ToString();
+            txtEmpAdd.Text = dt.Rows[currentrow]["EmpAdd"].ToString();
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                currentrow--;
+                Displaydata(currentrow);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("No data available");
+
+            }
+
+        }
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            do
+            {
+                SqlCommand cmd = new SqlCommand("select * from employee", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                Displaydata(currentrow);
+            
+                currentrow++;
+                //currentrow = dt.Rows.Count - 1;
+
+            } while (currentrow > dt.Rows.Count - 1);
+
+           
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //SqlCommand cmd = new SqlCommand("select * from employee", con);
+            //SqlDataAdapter da = new SqlDataAdapter(cmd);
+            //try
+            //{
+            //    da.Fill(dt);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Error happened");
+            //}
+            //Displaydata(currentrow);
         }
     }
 }
