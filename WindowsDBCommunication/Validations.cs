@@ -17,11 +17,9 @@ namespace WindowsDBCommunication
 {
     public partial class Validations : Form
     {
-        public string username;
-        public int id;
+
         public string email = "^[a-zA-z0-9+_.-]+@[a-zA-z0-9.-]+$";
-        public string password;
-        public string cpassword;
+
 
 
         public Validations()
@@ -40,156 +38,111 @@ namespace WindowsDBCommunication
         private void btnSubmit_Click(object sender, EventArgs e)
         {
 
-            listBox1.Items.Add(username);
-            listBox1.Items.Add(id);
-            listBox1.Items.Add(email);
-            listBox1.Items.Add(password);
-            listBox1.Items.Add(cpassword);
+           //listBox1.Items.Clear();
+            string hobbies = string.Empty;
 
             if (checkBox1.Checked)
             {
-                listBox1.Items.Add("Reading");
-                listBox1.Show();
+                hobbies += checkBox1.Text + ",";
             }
             if (checkBox2.Checked)
             {
-                listBox1.Items.Add("dancing");
+                hobbies += checkBox2.Text + ",";
             }
             if (checkBox3.Checked)
             {
-                listBox1.Items.Add("chess");
+                hobbies += checkBox3.Text + ",";
             }
             if (checkBox4.Checked)
             {
-                listBox1.Items.Add("Cricket");
+                hobbies += checkBox4.Text + ",";
             }
 
-            else if (!checkBox1.Checked || !checkBox1.Checked ||
-                !checkBox1.Checked || !checkBox1.Checked)
-
-                MessageBox.Show("Please choose atleast one check box");
-
-            listBox1.Show();
-
-        }
-
-        private void txtUserName_TextChanged(object sender, EventArgs e)
-        {
-
-            if (string.IsNullOrEmpty(txtUserName.Text))
-
+            if (string.IsNullOrEmpty(hobbies))
             {
-
-                txtUserName.Focus();
-                errorProvider1.SetError(txtUserName, "Please enter name:");
+                MessageBox.Show("Atleast one hobbies should be selected");
             }
-            else if (txtUserName.Text.Length < 5)
-            {
 
-                txtUserName.Focus();
-                errorProvider1.SetError(txtUserName, "Please enter Valid name:");
-            }
-            else if (!System.Text.RegularExpressions.Regex.IsMatch(txtUserName.Text, "^[a-zA-Z]"))
+            if (!string.IsNullOrEmpty(txtUserName.Text) && !string.IsNullOrEmpty(txtUserId.Text) && !string.IsNullOrEmpty(txtEmail.Text) && !string.IsNullOrEmpty(txtCOnf.Text) && !string.IsNullOrEmpty(hobbies))
             {
-
-                txtUserName.Focus();
-                errorProvider1.SetError(txtUserName, " invalid name:");
+                //add items to listbox
+                listBox1.Items.Add(txtUserName.Text);
+                listBox1.Items.Add(txtUserId.Text);
+                listBox1.Items.Add(txtEmail.Text);
+                listBox1.Items.Add(txtPassword.Text);
+                listBox1.Items.Add(txtCOnf.Text);
+                listBox1.Items.Add(hobbies);
             }
             else
             {
-                errorProvider1.Clear();
-                username = txtUserName.Text;
-
+                MessageBox.Show("All fields are mandatory");
             }
+           txtUserName.Text = string.Empty;
+            txtUserId.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtPassword.Text = string.Empty;    
+            txtCOnf.Text = string.Empty; 
+            checkBox1.Checked = false; 
+            checkBox2.Checked = false;
+            checkBox3.Checked = false;  
+            checkBox4.Checked = false;
+
 
         }
 
-        private void txtUserId_TextChanged(object sender, EventArgs e)
+
+        private void txtUserName_Leave(object sender, EventArgs e)
         {
-            if (txtUserId.Text == "")
+            //UserName should accet min 5 chars 
 
+            if (txtUserName.Text.Length <= 5)
             {
-
-                txtUserId.Focus();
-                errorProvider1.SetError(txtUserId, "Please enter id:");
-
-            }
-            else if (!txtUserId.Text.All(c => Char.IsNumber(c)))
-            {
-                txtUserId.Focus();
-                errorProvider1.SetError(txtUserId, "invalid id:");
-            }
-            else
-            {
-                errorProvider1.Clear();
-                id = int.Parse(txtUserId.Text.ToString());
+                MessageBox.Show("Please Enter Username with min 5 chars");
             }
         }
 
-        private void txtEmail_TextChanged(object sender, EventArgs e)
+        private void txtUserName_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (txtEmail.Text == "")
+            //Username should accept only alphabets
 
+            if (!char.IsLetter(e.KeyChar))
             {
-
-                txtEmail.Focus();
-                errorProvider1.SetError(txtEmail, "Please enter email:");
-
-            }
-
-            else if (Regex.IsMatch(txtEmail.Text, email) == false)
-            {
-                txtEmail.Focus();
-                errorProvider1.SetError(txtEmail, "invalid email:");
-            }
-            else
-            {
-                errorProvider1.Clear();
-                email = txtEmail.Text;
+                e.Handled = true;
+                MessageBox.Show("Please enter only alphabets");
             }
         }
 
-        private void txtPassword_TextChanged(object sender, EventArgs e)
+        private void txtUserId_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (txtPassword.Text == "")
-
+            //UserId should accept only numbers
+            if (!char.IsDigit(e.KeyChar))
             {
-
-                txtPassword.Focus();
-                errorProvider1.SetError(txtPassword, "Please enter password:");
-
-            }
-            else if ((txtPassword.Text.Length < 5) || (txtPassword.Text.Length > 10))
-            {
-                txtPassword.Focus();
-                errorProvider1.SetError(txtPassword, "Please enter valid password:");
-            }
-            else
-            {
-                errorProvider1.Clear();
-                password = txtPassword.Text;
+                e.Handled = true;
+                MessageBox.Show("Please enter only digits");
             }
         }
 
-        private void txtCOnf_TextChanged(object sender, EventArgs e)
+        private void txtEmail_Leave(object sender, EventArgs e)
         {
-            if (txtCOnf.Text == "")
-
+            if (!Regex.IsMatch(txtEmail.Text, email))
             {
-
-                txtCOnf.Focus();
-                errorProvider1.SetError(txtCOnf, "Please confirm password:");
-
+                MessageBox.Show("invalid email:");
             }
-            else if (txtCOnf.Text != password)
+        }
+
+        private void txtPassword_Leave(object sender, EventArgs e)
+        {
+            if (txtPassword.Text.Length <= 5 && txtPassword.Text.Length > 10)
             {
-                txtCOnf.Focus();
-                errorProvider1.SetError(txtCOnf, "invalid,try again:");
+                MessageBox.Show("Username should be min of 5 chars and max of 10 chars");
             }
-            else
+        }
+
+        private void txtCOnf_Leave(object sender, EventArgs e)
+        {
+            if (txtPassword.Text != txtCOnf.Text)
             {
-                errorProvider1.Clear();
-                cpassword = txtCOnf.Text;
+                MessageBox.Show("Password and confirm password is not matching");
             }
         }
     }

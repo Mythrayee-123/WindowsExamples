@@ -111,12 +111,17 @@ namespace WindowsDBCommunication
                 listBox1.Items.Add(txtPassword.Text);
                 listBox1.Items.Add(txtCOnf.Text);
                 listBox1.Items.Add(hobbies);
+
+                #region DBLogic 
+                //Add all fields to Database table 
+
+                #endregion
             }
             else
             {
                 MessageBox.Show("All fields are mandatory");
             }
-
+           
         }
     }
 }

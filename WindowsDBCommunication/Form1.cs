@@ -122,7 +122,8 @@ namespace WindowsDBCommunication
             }
             catch (Exception ex)
             {
-
+                if (currentrow <= 0)
+                    currentrow = 0;
                 MessageBox.Show("No data available");
 
             }
@@ -130,35 +131,36 @@ namespace WindowsDBCommunication
         }
         private void btnNext_Click(object sender, EventArgs e)
         {
-            do
+
+            try
             {
-                SqlCommand cmd = new SqlCommand("select * from employee", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                Displaydata(currentrow);
-            
                 currentrow++;
-                //currentrow = dt.Rows.Count - 1;
+                Displaydata(currentrow);
 
-            } while (currentrow > dt.Rows.Count - 1);
+            }
+            catch (Exception ex)
+            {
+                if (currentrow >= dt.Rows.Count)
+                    currentrow = dt.Rows.Count - 1;
+                MessageBox.Show("No data available");
 
-           
+            }
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //SqlCommand cmd = new SqlCommand("select * from employee", con);
-            //SqlDataAdapter da = new SqlDataAdapter(cmd);
-            //try
-            //{
-            //    da.Fill(dt);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Error happened");
-            //}
-            //Displaydata(currentrow);
+            SqlCommand cmd = new SqlCommand("select * from employee", con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            try
+            {
+                da.Fill(dt);
+            }
+            catch
+            {
+                MessageBox.Show("error happened");
+            }
+            Displaydata(currentrow);
         }
     }
 }

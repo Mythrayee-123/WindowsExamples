@@ -16,7 +16,7 @@ namespace WindowsDBCommunication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ValidationsReview());
+            Application.Run(new Login());
         }
     }
 }

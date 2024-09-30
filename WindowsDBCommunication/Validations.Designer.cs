@@ -57,7 +57,8 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(100, 26);
             this.txtUserName.TabIndex = 0;
-            this.txtUserName.TextChanged += new System.EventHandler(this.txtUserName_TextChanged);
+            this.txtUserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUserName_KeyPress);
+            this.txtUserName.Leave += new System.EventHandler(this.txtUserName_Leave);
             // 
             // label1
             // 
@@ -86,7 +87,7 @@
             this.txtUserId.Name = "txtUserId";
             this.txtUserId.Size = new System.Drawing.Size(100, 26);
             this.txtUserId.TabIndex = 2;
-            this.txtUserId.TextChanged += new System.EventHandler(this.txtUserId_TextChanged);
+            this.txtUserId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUserId_KeyPress);
             // 
             // label3
             // 
@@ -105,7 +106,8 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(100, 26);
             this.txtPassword.TabIndex = 6;
-            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
+            this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.Leave += new System.EventHandler(this.txtPassword_Leave);
             // 
             // label4
             // 
@@ -124,7 +126,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(100, 26);
             this.txtEmail.TabIndex = 4;
-            this.txtEmail.TextChanged += new System.EventHandler(this.txtEmail_TextChanged);
+            this.txtEmail.Leave += new System.EventHandler(this.txtEmail_Leave);
             // 
             // label5
             // 
@@ -143,7 +145,8 @@
             this.txtCOnf.Name = "txtCOnf";
             this.txtCOnf.Size = new System.Drawing.Size(100, 26);
             this.txtCOnf.TabIndex = 8;
-            this.txtCOnf.TextChanged += new System.EventHandler(this.txtCOnf_TextChanged);
+            this.txtCOnf.UseSystemPasswordChar = true;
+            this.txtCOnf.Leave += new System.EventHandler(this.txtCOnf_Leave);
             // 
             // checkBox1
             // 
